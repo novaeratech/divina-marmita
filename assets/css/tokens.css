@@ -1,0 +1,86 @@
+/* ============================================================
+   SANTO DOCE — DESIGN TOKENS
+   Fonte única de verdade dos tokens da marca.
+   Consumidos por Tailwind (tailwind.config.js) e por CSS puro.
+   ============================================================ */
+
+:root {
+  /* ---------- COLOR TOKENS ---------- */
+  --sd-primary: #0E5A43;         /* Verde da marca */
+  --sd-primary-dark: #0A4835;    /* Verde escuro / hover */
+  --sd-secondary: #C99A2E;       /* Dourado (Gold) */
+  --sd-secondary-dark: #A87F1F;  /* Dourado hover (derivado) */
+  --sd-background: #F7F1EB;      /* Fundo cremoso */
+  --sd-surface: #EFE5DA;         /* Superfícies / seções */
+  --sd-accent: #8E6847;          /* Madeira / caramelo */
+  --sd-text-primary: #2D2D2D;    /* Texto principal */
+  --sd-text-secondary: #5C5C5C;  /* Texto secundário */
+  --sd-white: #FFFFFF;
+  --sd-success: #4E8F5B;
+  --sd-error: #D64545;
+
+  /* Derivados úteis (bordas, estados suaves) */
+  --sd-border: #E3D8CB;          /* Borda clara sobre background */
+  --sd-border-strong: #D8C9B8;
+  --sd-primary-soft: #E7F0EC;    /* Fundo suave verde (badges/alerts) */
+  --sd-gold-soft: #F6EDD6;       /* Fundo suave dourado */
+  --sd-error-soft: #FBEAEA;
+  --sd-success-soft: #E8F3EB;
+
+  /* ---------- TYPOGRAPHY TOKENS ---------- */
+  --sd-font-heading: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sd-font-body: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --sd-fs-display: 4rem;      /* 64px */
+  --sd-fs-h1: 3.5rem;         /* 56px */
+  --sd-fs-h2: 2.625rem;       /* 42px */
+  --sd-fs-h3: 2.125rem;       /* 34px */
+  --sd-fs-h4: 1.75rem;        /* 28px */
+  --sd-fs-h5: 1.5rem;         /* 24px */
+  --sd-fs-body-lg: 1.25rem;   /* 20px */
+  --sd-fs-body: 1.125rem;     /* 18px */
+  --sd-fs-body-sm: 1rem;      /* 16px */
+  --sd-fs-caption: 0.875rem;  /* 14px */
+
+  --sd-lh-tight: 1.1;
+  --sd-lh-heading: 1.2;
+  --sd-lh-body: 1.6;
+
+  /* ---------- SPACING TOKENS (escala de 8pt) ---------- */
+  --sd-space-1: 4px;
+  --sd-space-2: 8px;
+  --sd-space-3: 16px;
+  --sd-space-4: 24px;
+  --sd-space-5: 32px;
+  --sd-space-6: 40px;
+  --sd-space-7: 48px;
+  --sd-space-8: 56px;
+  --sd-space-9: 64px;
+  --sd-space-10: 80px;
+  --sd-space-11: 96px;
+  --sd-space-12: 120px;
+
+  /* ---------- RADIUS TOKENS ---------- */
+  --sd-radius-xs: 4px;
+  --sd-radius-sm: 8px;
+  --sd-radius-md: 12px;
+  --sd-radius-lg: 20px;
+  --sd-radius-xl: 32px;
+  --sd-radius-full: 999px;
+
+  /* ---------- SHADOW TOKENS (muito suaves) ---------- */
+  --sd-shadow-xs: 0 1px 2px rgba(45, 45, 45, 0.04);
+  --sd-shadow-sm: 0 2px 8px rgba(45, 45, 45, 0.05);
+  --sd-shadow-md: 0 8px 24px rgba(45, 45, 45, 0.06);
+  --sd-shadow-lg: 0 16px 40px rgba(45, 45, 45, 0.08);
+  --sd-shadow-focus: 0 0 0 3px rgba(14, 90, 67, 0.18);
+
+  /* ---------- MOTION TOKENS ---------- */
+  --sd-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --sd-dur-fast: 200ms;
+  --sd-dur: 250ms;
+  --sd-dur-slow: 300ms;
+
+  /* ---------- LAYOUT TOKENS ---------- */
+  --sd-container: 1280px;
+}
