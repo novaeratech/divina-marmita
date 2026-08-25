@@ -9,12 +9,14 @@
   3. Foi feito para você (#para-voce)
   4. Imagine o domingo (#imagine)
   5. Como funciona (#como-funciona)
-  6. Módulos (#modulos)
-  7. Mais do que receitas (#metodo)
-  8. Oferta / pricing (#oferta) — R$ 147
-  9. FAQ (#faq)
-  10. CTA final (#cta-final)
-  11. Fechamento da marca + footer
+  6. Lista, congelamento, tempo e economia (#pilares)
+  7. Módulo bônus: saladas (#bonus)
+  8. Módulos (#modulos)
+  9. Mais do que receitas (#metodo)
+  10. Oferta / pricing (#oferta) — R$ 147
+  11. CTA final (#cta-final)
+  12. FAQ (#faq)
+  13. Fechamento da marca + footer
 
   Pendente para retomar:
   - Link de checkout nos botões (hoje apontam para #oferta)
@@ -51,9 +53,16 @@
       --sd-header-bg: #F3E6DC;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
 
-    body { background: var(--sd-section-white); }
+    body {
+      background: var(--sd-section-white);
+      overflow-x: clip;
+      max-width: 100%;
+    }
 
     .sd-btn--primary {
       background: var(--sd-secondary);
@@ -87,24 +96,15 @@
     }
 
     .header__grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
       padding: 56px 0 80px;
     }
 
     .header .ds-container.header__grid {
       padding-left: 24px;
       padding-right: 24px;
-    }
-
-    .header__content {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      max-width: 640px;
-      align-self: center;
     }
 
     .header__brand {
@@ -116,6 +116,17 @@
       color: var(--sd-primary);
       text-transform: uppercase;
       margin: 0;
+    }
+
+    .header__main {
+      display: contents;
+    }
+
+    .header__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-width: 0;
     }
 
     .header__subtitle {
@@ -149,7 +160,8 @@
 
     .header__cta {
       width: fit-content;
-      margin-top: 12px;
+      max-width: 100%;
+      margin-top: 8px;
       box-shadow: var(--sd-shadow-md);
       white-space: normal;
       text-align: center;
@@ -170,85 +182,26 @@
     .header__cta:hover .sd-icon { color: var(--sd-secondary); }
 
     .header__media {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      position: relative;
+      width: 100%;
+      min-width: 0;
     }
 
     .header__visual {
       width: 100%;
-      max-width: 480px;
-      aspect-ratio: 1;
+      aspect-ratio: 4 / 3;
       border-radius: var(--sd-radius-xl);
-      background:
-        radial-gradient(circle at 30% 20%, rgba(246, 184, 80, 0.28), transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 77, 58, 0.12), transparent 45%),
-        var(--sd-surface);
-      border: 1px solid var(--sd-border);
-      box-shadow: var(--sd-shadow-md);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      color: var(--sd-primary);
-      padding: 40px;
-      text-align: center;
+      background: var(--sd-surface);
+      overflow: hidden;
+      line-height: 0;
     }
 
-    .header__visual-icon {
-      width: 88px;
-      height: 88px;
-      border-radius: var(--sd-radius-full);
-      background: var(--sd-primary);
-      color: var(--sd-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .header__visual-icon i { width: 40px; height: 40px; }
-
-    .header__visual-kicker {
-      font-size: var(--sd-fs-caption);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--sd-accent);
-      margin: 0;
-    }
-
-    .header__visual-title {
-      font-family: var(--sd-font-heading);
-      font-size: clamp(1.75rem, 3vw, 2.25rem);
-      font-weight: 700;
-      line-height: 1.15;
-      margin: 0;
-      color: var(--sd-primary);
-    }
-
-    .header__visual-list {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 0;
-      display: grid;
-      gap: 8px;
-      font-size: var(--sd-fs-caption);
-      font-weight: 500;
-      color: var(--sd-text-secondary);
-    }
-
-    .header__visual-list li {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .header__visual-list i {
-      width: 16px;
-      height: 16px;
-      color: var(--sd-primary);
-      flex: none;
+    .header__visual img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 18%;
     }
 
     .header__scroll {
@@ -281,27 +234,67 @@
 
     @media (min-width: 768px) {
       .header__grid {
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 48px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "brand media"
+          "copy media"
+          "cta media";
+        column-gap: 40px;
+        row-gap: clamp(14px, 1.8vw, 24px);
         padding: 72px 0 96px;
         min-height: calc(100vh - 0px);
+        align-items: start;
+      }
+
+      .header__brand {
+        grid-area: brand;
+        align-self: start;
+      }
+
+      .header__copy {
+        grid-area: copy;
+        gap: clamp(22px, 2.4vw, 32px);
+      }
+
+      .header__aside {
+        margin-top: 0;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      .header__cta {
+        grid-area: cta;
+        margin-top: 4px;
+      }
+
+      .header__media {
+        grid-area: media;
+        align-self: stretch;
+        min-height: 0;
+      }
+
+      /* Foto acompanha título → CTA, sem definir a altura da linha */
+      .header__visual {
+        position: absolute;
+        inset: 0;
+        aspect-ratio: auto;
       }
 
       .header .ds-container.header__grid {
         padding-right: 24px;
       }
-
-      .header__content {
-        padding-bottom: 24px;
-      }
     }
 
     @media (min-width: 1024px) {
       .header__grid {
-        grid-template-columns: 1.15fr 0.85fr;
+        column-gap: 48px;
+        row-gap: clamp(16px, 1.6vw, 22px);
       }
 
-      .header__visual { max-width: 520px; }
+      .header__copy {
+        gap: clamp(24px, 2.6vw, 36px);
+      }
     }
 
     /* ============================================================
@@ -309,48 +302,454 @@
        ============================================================ */
     .section-pains {
       background: var(--sd-section-white);
-      padding: var(--sd-space-11) 0 var(--sd-space-12);
+      padding: 0;
     }
 
-    .section-pains__inner {
-      max-width: 720px;
-      margin: 0 auto;
+    .section-pains__stage {
+      position: relative;
+      width: 100%;
+      isolation: isolate;
+      overflow: hidden;
     }
 
-    .section-pains__title {
+    .section-pains__bg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .section-pains__intro {
+      position: absolute;
+      top: clamp(52px, 7vw, 88px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      margin: 0;
+      max-width: min(94vw, 680px);
+      width: max-content;
+      padding:
+        clamp(18px, 2vw, 26px)
+        clamp(44px, 5vw, 72px);
+      background: var(--sd-secondary);
+      color: var(--sd-primary);
+      border-radius: 999px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
       font-family: var(--sd-font-body);
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
       font-weight: 700;
-      font-size: clamp(1.75rem, 4vw, 2.625rem);
-      line-height: 1.2;
-      color: var(--sd-text-primary);
-      margin: 0 0 var(--sd-space-7);
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+      text-align: center;
+      white-space: nowrap;
+      pointer-events: auto;
     }
 
-    .section-pains__list {
+    .section-pains__closing {
+      position: absolute;
+      bottom: clamp(18px, 3vw, 36px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 1.6vw, 20px);
+      margin: 0;
+      width: min(92vw, 640px);
+      padding:
+        clamp(16px, 1.7vw, 22px)
+        clamp(20px, 2.2vw, 28px);
+      background: var(--sd-primary);
+      border-radius: clamp(28px, 2.8vw, 40px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.26);
+      box-sizing: border-box;
+      pointer-events: auto;
+    }
+
+    .section-pains__closing-icon {
+      flex: none;
+      width: clamp(40px, 4vw, 52px);
+      height: clamp(40px, 4vw, 52px);
+      color: var(--sd-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+    }
+
+    .section-pains__closing-icon i,
+    .section-pains__closing-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke-width: 1.75;
+    }
+
+    .section-pains__closing-copy {
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: var(--sd-space-5);
+      gap: 4px;
     }
 
-    .section-pains__list p {
+    .section-pains__closing-title {
       margin: 0;
-      font-size: var(--sd-fs-body);
-      line-height: 1.7;
-      color: var(--sd-text-secondary);
-    }
-
-    .section-pains__inner > .section-pains__list + .section-pains__list {
-      margin-top: var(--sd-space-5);
-    }
-
-    .section-pains__close {
-      font-weight: 500;
-      color: var(--sd-text-primary) !important;
-    }
-
-    .section-pains__close strong {
-      color: var(--sd-primary);
+      font-family: var(--sd-font-body);
+      font-size: clamp(1.05rem, 1.7vw, 1.35rem);
       font-weight: 700;
+      line-height: 1.2;
+      color: var(--sd-secondary);
+    }
+
+    .section-pains__closing-text {
+      margin: 0;
+      font-family: var(--sd-font-body);
+      font-size: clamp(0.875rem, 1.35vw, 1.0625rem);
+      font-weight: 500;
+      line-height: 1.35;
+      color: #fff;
+    }
+
+    .section-pains__closing-text strong {
+      font-weight: 700;
+      color: var(--sd-secondary);
+    }
+
+    .section-pains__overlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.16fr) minmax(0, 0.92fr);
+      align-items: center;
+      gap: clamp(6px, 1vw, 14px);
+      padding:
+        clamp(120px, 16vw, 180px)
+        clamp(36px, 5.5vw, 88px)
+        clamp(118px, 15vw, 170px);
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+
+    .section-pains__col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(18px, 2.4vw, 28px);
+      min-width: 0;
+      width: 100%;
+      margin-top: 0;
+      pointer-events: auto;
+    }
+
+    .section-pains__col--left {
+      justify-self: stretch;
+      align-items: flex-end;
+    }
+
+    .section-pains__col--right {
+      justify-self: stretch;
+      align-items: flex-start;
+    }
+
+    .pain-card {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.2vw, 16px);
+      margin: 0;
+      width: fit-content;
+      max-width: min(100%, clamp(260px, 28vw, 340px));
+      padding:
+        clamp(20px, 2vw, 26px)
+        clamp(16px, 1.5vw, 20px)
+        clamp(20px, 2vw, 26px)
+        clamp(12px, 1.2vw, 16px);
+      background: #F5F1EE;
+      border-radius: clamp(26px, 2.4vw, 36px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+    }
+
+    .pain-card__icon {
+      flex: none;
+      width: clamp(40px, 3.6vw, 48px);
+      height: clamp(40px, 3.6vw, 48px);
+      border-radius: 50%;
+      background: var(--sd-primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+    }
+
+    .pain-card__icon i,
+    .pain-card__icon svg {
+      width: 54%;
+      height: 54%;
+      stroke-width: 2.25;
+    }
+
+    .pain-card__text {
+      margin: 0;
+      font-family: var(--sd-font-body);
+      font-size: clamp(0.9375rem, 1.45vw, 1.125rem);
+      font-weight: 500;
+      line-height: 1.3;
+      color: #1a1a1a;
+      text-align: left;
+    }
+
+    .pain-card__text strong {
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translate3d(0, 28px, 0);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+
+    [data-reveal="left"] {
+      transform: translate3d(-36px, 12px, 0);
+    }
+
+    [data-reveal="right"] {
+      transform: translate3d(36px, 12px, 0);
+    }
+
+    [data-reveal="down"] {
+      transform: translate3d(0, -24px, 0);
+    }
+
+    [data-reveal="up"] {
+      transform: translate3d(0, 36px, 0);
+    }
+
+    [data-reveal].is-revealed {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .section-pains [data-reveal] {
+      transition: none;
+      will-change: opacity, transform;
+    }
+
+    .section-pains__intro[data-reveal="down"] {
+      opacity: 0;
+      transform: translate3d(-50%, -36px, 0);
+    }
+
+    .section-pains__closing[data-reveal="up"] {
+      opacity: 0;
+      transform: translate3d(-50%, 40px, 0);
+    }
+
+    .section-pains [data-reveal="left"] {
+      transform: translate3d(-72px, 0, 0);
+    }
+
+    .section-pains [data-reveal="right"] {
+      transform: translate3d(72px, 0, 0);
+    }
+
+    @keyframes pains-bounce-down {
+      0% {
+        opacity: 0;
+        transform: translate3d(-50%, -42px, 0) scale(0.9);
+      }
+      55% {
+        opacity: 1;
+        transform: translate3d(-50%, 10px, 0) scale(1.04);
+      }
+      72% {
+        transform: translate3d(-50%, -6px, 0) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(-50%, 0, 0) scale(1);
+      }
+    }
+
+    @keyframes pains-bounce-up {
+      0% {
+        opacity: 0;
+        transform: translate3d(-50%, 44px, 0) scale(0.9);
+      }
+      55% {
+        opacity: 1;
+        transform: translate3d(-50%, -10px, 0) scale(1.04);
+      }
+      72% {
+        transform: translate3d(-50%, 6px, 0) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(-50%, 0, 0) scale(1);
+      }
+    }
+
+    @keyframes pains-bounce-down-static {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, -36px, 0) scale(0.92);
+      }
+      55% {
+        opacity: 1;
+        transform: translate3d(0, 8px, 0) scale(1.04);
+      }
+      72% {
+        transform: translate3d(0, -5px, 0) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    @keyframes pains-bounce-up-static {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 36px, 0) scale(0.92);
+      }
+      55% {
+        opacity: 1;
+        transform: translate3d(0, -8px, 0) scale(1.04);
+      }
+      72% {
+        transform: translate3d(0, 5px, 0) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    .section-pains__intro[data-reveal="down"].is-revealed {
+      animation: pains-bounce-down 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+
+    .section-pains__closing[data-reveal="up"].is-revealed {
+      animation: pains-bounce-up 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        animation: none !important;
+      }
+
+      .section-pains__intro[data-reveal],
+      .section-pains__closing[data-reveal] {
+        transform: translate3d(-50%, 0, 0);
+      }
+
+      .section-pains [data-reveal="left"],
+      .section-pains [data-reveal="right"] {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        overflow-x: clip;
+      }
+
+      .section-pains {
+        overflow-x: clip;
+      }
+
+      .section-pains__intro,
+      .section-pains__intro[data-reveal] {
+        position: static;
+        transform: none;
+        display: block;
+        width: calc(100% - 32px);
+        max-width: none;
+        margin: 16px 16px 0;
+        white-space: normal;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      .section-pains__intro[data-reveal="down"].is-revealed {
+        animation-name: pains-bounce-down-static;
+      }
+
+      .section-pains__closing,
+      .section-pains__closing[data-reveal] {
+        position: static;
+        transform: none;
+        width: calc(100% - 32px);
+        margin: 0 16px 16px;
+      }
+
+      .section-pains__closing[data-reveal="up"].is-revealed {
+        animation-name: pains-bounce-up-static;
+      }
+
+      .section-pains__overlay {
+        position: static;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 20px 16px 24px;
+        background: var(--sd-section-white);
+      }
+
+      .section-pains__col {
+        gap: 14px;
+        width: 100%;
+        margin-top: 0;
+        align-items: stretch;
+      }
+
+      .pain-card {
+        border-radius: 28px;
+        width: 100%;
+        max-width: none;
+        padding: 18px 16px 18px 14px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .pain-card__icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .pain-card__text {
+        font-size: 0.9375rem;
+      }
+    }
+
+    @media (min-width: 901px) and (max-width: 1200px) {
+      .section-pains__overlay {
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
+        padding-block: clamp(88px, 12vw, 140px);
+        padding-inline: clamp(28px, 4vw, 56px);
+        gap: clamp(6px, 1vw, 12px);
+      }
+
+      .pain-card {
+        max-width: min(100%, 280px);
+        padding: 18px 14px 18px 12px;
+        gap: 12px;
+        border-radius: 26px;
+      }
+
+      .pain-card__icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .pain-card__text {
+        font-size: 0.875rem;
+      }
     }
 
     /* ============================================================
@@ -383,66 +782,94 @@
       line-height: 1.2;
     }
 
-    .section-for-you__grid {
+    .dominate-compare {
+      position: relative;
       display: grid;
       grid-template-columns: 1fr;
-      gap: var(--sd-space-7);
-      margin-bottom: var(--sd-space-10);
+      gap: var(--sd-space-4);
+      max-width: 880px;
+      margin: 0 auto var(--sd-space-7);
     }
 
     @media (min-width: 768px) {
-      .section-for-you__grid {
-        grid-template-columns: repeat(2, 1fr);
+      .dominate-compare {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sd-space-4);
       }
     }
 
-    .for-you-card {
-      position: relative;
-      background: var(--sd-section-white);
-      border-radius: var(--sd-radius-sm);
-      padding: var(--sd-space-7) var(--sd-space-5) var(--sd-space-6);
-      text-align: center;
-      margin-top: 22px;
+    .dominate-card {
+      background: var(--sd-primary);
+      color: var(--sd-white);
+      border-radius: var(--sd-radius-md);
+      padding: var(--sd-space-5) var(--sd-space-4);
     }
 
-    .for-you-card__icon {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(45deg);
-      width: 44px;
-      height: 44px;
-      background: var(--sd-primary);
+    .dominate-card__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dominate-card__list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: var(--sd-fs-body-sm);
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .dominate-card__list i {
+      flex: none;
+      width: 16px;
+      height: 16px;
+      margin-top: 3px;
+      color: var(--sd-secondary);
+    }
+
+    .dominate-compare__badge {
+      display: flex;
+      justify-content: center;
+      margin: calc(var(--sd-space-2) * -1) 0;
+      z-index: 2;
+    }
+
+    @media (min-width: 768px) {
+      .dominate-compare__badge {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+      }
+    }
+
+    .dominate-badge {
+      width: 40px;
+      height: 40px;
+      background: var(--sd-secondary);
+      transform: rotate(45deg);
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: var(--sd-shadow-sm);
     }
 
-    .for-you-card__icon-inner {
+    .dominate-badge__inner {
       transform: rotate(-45deg);
-      width: 22px;
-      height: 22px;
-      background: var(--sd-white);
-      border-radius: var(--sd-radius-full);
+      color: var(--sd-white);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--sd-primary);
     }
 
-    .for-you-card__icon-inner svg {
-      width: 14px;
-      height: 14px;
-      stroke-width: 2.5;
-    }
-
-    .for-you-card__text {
-      font-size: var(--sd-fs-body-sm);
-      font-weight: 500;
-      line-height: 1.65;
-      color: var(--sd-text-primary);
-      margin: 0;
+    .dominate-badge__inner i {
+      width: 18px;
+      height: 18px;
     }
 
     .section-for-you__cta {
@@ -462,59 +889,236 @@
       padding: var(--sd-space-11) 0 var(--sd-space-12);
     }
 
-    .section-imagine__inner {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
     .section-imagine__title {
       font-family: var(--sd-font-body);
       font-weight: 700;
       font-size: clamp(1.75rem, 4vw, 2.625rem);
       line-height: 1.2;
       color: var(--sd-text-primary);
-      margin: 0 0 var(--sd-space-7);
+      text-align: center;
+      margin: 0 0 var(--sd-space-8);
     }
 
-    .section-imagine__list {
+    .section-imagine__layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sd-space-6);
+      align-items: stretch;
+    }
+
+    @media (min-width: 900px) {
+      .section-imagine__layout {
+        grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .imagine-card--story {
+        height: auto;
+      }
+
+      .imagine-photos {
+        grid-template-rows: 1fr 1fr;
+      }
+
+      .imagine-mini {
+        height: 100%;
+        min-height: 0;
+        justify-content: flex-start;
+      }
+
+      .imagine-mini__photo {
+        flex: 0 0 66%;
+        max-height: 66%;
+        min-height: 0;
+        align-items: flex-start;
+      }
+
+      .imagine-mini__frame,
+      .imagine-mini__photo img {
+        max-height: 100%;
+      }
+
+      .imagine-mini__text {
+        flex: 1 1 auto;
+      }
+    }
+
+    .imagine-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .imagine-mini {
       display: flex;
       flex-direction: column;
-      gap: var(--sd-space-4);
-      margin-bottom: var(--sd-space-6);
+      justify-content: flex-start;
+      min-height: 0;
+      margin: 0;
+      padding: 12px 12px 14px;
+      background: var(--sd-background);
+      border-radius: var(--sd-radius-md);
     }
 
-    .section-imagine__list p,
-    .section-imagine__lead,
-    .section-imagine__copy {
+    .imagine-mini__photo {
+      position: relative;
+      flex: 0 0 auto;
+      width: 100%;
+      min-height: 160px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      overflow: hidden;
+      border: 0;
+      background: transparent;
+    }
+
+    .imagine-mini__frame {
+      position: relative;
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: hidden;
+      border-radius: 18px;
+      line-height: 0;
+    }
+
+    .imagine-mini__photo img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border: 0;
+      border-radius: 18px;
+    }
+
+    .imagine-mini__frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      pointer-events: none;
+      background:
+        linear-gradient(to top, color-mix(in srgb, var(--sd-background) 42%, transparent), transparent 18%),
+        linear-gradient(to bottom, color-mix(in srgb, var(--sd-background) 32%, transparent), transparent 16%),
+        linear-gradient(to left, color-mix(in srgb, var(--sd-background) 28%, transparent), transparent 14%),
+        linear-gradient(to right, color-mix(in srgb, var(--sd-background) 28%, transparent), transparent 14%);
+    }
+
+    .imagine-mini__text {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 0;
-      font-size: var(--sd-fs-body);
-      line-height: 1.7;
+      padding: 8px 6px 4px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--sd-primary);
+      text-align: center;
+    }
+
+    @media (max-width: 899px) {
+      .imagine-photos {
+        grid-template-rows: auto;
+      }
+
+      .imagine-mini__photo {
+        min-height: 180px;
+      }
+    }
+
+    .imagine-card {
+      background: var(--sd-background);
+      border-radius: var(--sd-radius-md);
+      padding: 20px;
+    }
+
+    .imagine-card--story {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+      height: auto;
+    }
+
+    .imagine-card__photo {
+      position: relative;
+      flex: none;
+      width: 100%;
+      aspect-ratio: 5 / 6;
+      border-radius: var(--sd-radius-md);
+      background: var(--sd-surface);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    @media (min-width: 900px) {
+      .imagine-card__photo {
+        aspect-ratio: 5 / 6;
+        min-height: 0;
+        max-height: none;
+      }
+    }
+
+    .imagine-card__photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .imagine-card__kicker,
+    .imagine-card__quote,
+    .imagine-card__copy {
+      flex-shrink: 0;
+    }
+
+    .imagine-card__kicker {
+      margin: 0 0 20px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--sd-primary);
+      text-align: center;
+    }
+
+    .imagine-card__quote {
+      font-family: var(--sd-font-body);
+      font-weight: 700;
+      font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+      line-height: 1.3;
+      color: var(--sd-primary);
+      margin: 0 0 var(--sd-space-4);
+    }
+
+    .imagine-card__copy {
+      margin: 0 0 var(--sd-space-3);
+      font-size: var(--sd-fs-body-sm);
+      line-height: 1.65;
       color: var(--sd-text-secondary);
     }
 
-    .section-imagine__lead {
-      margin-bottom: var(--sd-space-6);
+    .imagine-card__copy:last-child {
+      margin-bottom: 0;
     }
 
-    .section-imagine__quote {
-      font-family: var(--sd-font-body);
-      font-weight: 700;
-      font-size: clamp(1.375rem, 3vw, 1.875rem);
-      line-height: 1.3;
-      color: var(--sd-primary);
-      margin: 0 0 var(--sd-space-6);
-    }
-
-    .section-imagine__copy + .section-imagine__copy {
-      margin-top: var(--sd-space-4);
-    }
-
-    .section-imagine__copy strong {
+    .imagine-card__copy strong {
       color: var(--sd-text-primary);
       font-weight: 700;
     }
 
-    .section-imagine__copy strong.brand {
+    .imagine-card__copy strong.brand {
       color: var(--sd-primary);
     }
 
@@ -527,8 +1131,9 @@
     }
 
     .section-how__inner {
-      max-width: 720px;
+      max-width: 640px;
       margin: 0 auto;
+      text-align: center;
     }
 
     .section-how__title {
@@ -537,7 +1142,7 @@
       font-size: clamp(1.75rem, 4vw, 2.625rem);
       line-height: 1.2;
       color: var(--sd-text-primary);
-      margin: 0 0 var(--sd-space-7);
+      margin: 0 0 var(--sd-space-5);
     }
 
     .section-how__kicker {
@@ -547,7 +1152,7 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--sd-primary);
-      margin: 0 0 var(--sd-space-5);
+      margin: 0 0 var(--sd-space-4);
     }
 
     .section-how__copy {
@@ -563,48 +1168,175 @@
     }
 
     .section-how__lead {
-      margin: var(--sd-space-5) 0 var(--sd-space-4);
+      margin: var(--sd-space-4) 0 var(--sd-space-3);
       font-size: var(--sd-fs-body);
-      font-weight: 500;
+      font-weight: 700;
       line-height: 1.7;
       color: var(--sd-text-primary);
     }
 
     .section-how__list {
       list-style: none;
-      margin: 0 0 var(--sd-space-6);
+      margin: 0 0 var(--sd-space-5);
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: var(--sd-space-3);
+      gap: 10px;
+    }
+
+    .section-how__inner .section-how__list {
+      margin: 0 auto var(--sd-space-5);
+      align-items: flex-start;
+      width: fit-content;
+      text-align: left;
     }
 
     .section-how__list li {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
       font-size: var(--sd-fs-body);
-      line-height: 1.7;
+      line-height: 1.6;
       color: var(--sd-text-secondary);
     }
 
     .section-how__list i {
       width: 18px;
       height: 18px;
-      color: var(--sd-primary);
+      color: var(--sd-text-primary);
       flex: none;
       margin-top: 4px;
-    }
-
-    .section-how__block {
-      margin-top: var(--sd-space-8);
+      stroke-width: 1.75;
     }
 
     .section-how__highlight {
-      margin: var(--sd-space-4) 0 0;
+      margin: var(--sd-space-3) 0 0;
       font-size: var(--sd-fs-body);
       font-weight: 700;
-      line-height: 1.7;
+      line-height: 1.5;
+      color: var(--sd-primary);
+    }
+
+    /* ============================================================
+       SEÇÃO — Lista, congelamento, tempo e economia
+       ============================================================ */
+    .section-pillars {
+      background: var(--sd-primary);
+      padding: var(--sd-space-10) 0 var(--sd-space-10);
+    }
+
+    .section-pillars__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sd-space-4);
+      margin: 0 auto;
+      align-items: stretch;
+    }
+
+    @media (min-width: 700px) {
+      .section-pillars__grid {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 1fr;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .section-pillars__grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-auto-rows: 1fr;
+        gap: 14px;
+      }
+
+      .section-pillars .how-card {
+        padding: 20px 16px 18px;
+      }
+
+      .section-pillars .how-card .module-card__name {
+        font-size: 0.875rem;
+        margin-bottom: 10px;
+      }
+
+      .section-pillars .how-card .module-card__text {
+        font-size: 0.8125rem;
+        line-height: 1.6;
+      }
+
+      .section-pillars .how-card .module-card__text + .module-card__text {
+        margin-top: 10px;
+      }
+    }
+
+    .section-pillars .how-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 22px 18px 20px;
+    }
+
+    .section-pillars .how-card .module-card__icon {
+      margin-bottom: 14px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .section-pillars .how-card .module-card__icon i {
+      width: 18px;
+      height: 18px;
+    }
+
+    .section-pillars .how-card .module-card__name {
+      font-size: 0.9375rem;
+      margin-bottom: 10px;
+    }
+
+    .section-pillars .how-card .module-card__text {
+      font-size: 0.875rem;
+      line-height: 1.65;
+    }
+
+    .how-card .module-card__text + .module-card__text {
+      margin-top: 12px;
+    }
+
+    .how-card .module-card__text strong {
+      color: var(--sd-text-primary);
+      font-weight: 700;
+    }
+
+    .how-card .section-how__lead {
+      margin: 16px 0 10px;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.65;
+      color: var(--sd-primary);
+    }
+
+    .how-card .section-how__highlight {
+      margin: 4px 0 0;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.6;
+      color: var(--sd-secondary);
+    }
+
+    .how-card .section-how__list {
+      margin: 0 auto 14px;
+      width: fit-content;
+      text-align: left;
+      gap: 10px;
+    }
+
+    .how-card .section-how__list li {
+      font-size: 0.875rem;
+      line-height: 1.55;
+      color: var(--sd-text-secondary);
+    }
+
+    .how-card .section-how__list i {
+      width: 16px;
+      height: 16px;
+      margin-top: 3px;
       color: var(--sd-primary);
     }
 
@@ -612,62 +1344,280 @@
        SEÇÃO — O que você vai aprender
        ============================================================ */
     .section-modules {
-      background: var(--sd-section-white);
-      padding: var(--sd-space-11) 0 var(--sd-space-12);
+      background: var(--sd-primary);
+      padding: var(--sd-space-10) 0 var(--sd-space-10);
+      overflow: hidden;
     }
 
     .section-modules__title {
       font-family: var(--sd-font-body);
-      font-weight: 700;
-      font-size: clamp(1.75rem, 4vw, 2.625rem);
-      line-height: 1.2;
-      color: var(--sd-text-primary);
+      font-weight: 600;
+      font-size: clamp(1.5rem, 3.5vw, 2.125rem);
+      line-height: 1.3;
+      color: var(--sd-white);
       text-align: center;
       margin: 0 0 var(--sd-space-8);
     }
 
-    .modules-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--sd-space-3);
+    .section-modules__title strong {
+      display: block;
+      color: var(--sd-secondary);
+      font-weight: 700;
     }
 
-    @media (min-width: 768px) {
-      .modules-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .modules-carousel {
+      position: relative;
+      display: block;
+      max-width: 1240px;
+      margin: 0 auto var(--sd-space-8);
+      padding: 0 56px;
+    }
+
+    .modules-carousel__viewport {
+      position: relative;
+      width: 100%;
+      height: clamp(460px, 56vw, 580px);
+      overflow: hidden;
+    }
+
+    .modules-carousel__track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .modules-carousel .module-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(420px, 78%);
+      height: var(--card-h, 300px);
+      min-height: 0;
+      max-height: none;
+      overflow: auto;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      --offset: 0;
+      --scale-x: 0.88;
+      --scale-y: 0.82;
+      --opacity: 0;
+      --z: 1;
+      --card-h: 300px;
+      transform: translate(-50%, -50%) translateX(calc(var(--offset) * 46%)) scale(var(--scale-x), var(--scale-y));
+      opacity: var(--opacity);
+      z-index: var(--z);
+      pointer-events: none;
+      transition:
+        transform 0.55s var(--sd-ease),
+        opacity 0.45s var(--sd-ease),
+        height 0.55s var(--sd-ease),
+        box-shadow 0.45s var(--sd-ease);
+      box-shadow: none;
+      scrollbar-width: none;
+    }
+
+    .modules-carousel .module-card .module-card__icon,
+    .modules-carousel .module-card .module-card__name {
+      flex-shrink: 0;
+    }
+
+    .modules-carousel .module-card .module-card__name {
+      font-size: 1.0625rem;
+      margin-bottom: 0;
+    }
+
+    .modules-carousel .module-card .module-card__text {
+      margin-top: 24px;
+      margin-bottom: 0;
+    }
+
+    .modules-carousel .module-card::-webkit-scrollbar {
+      display: none;
+    }
+
+    .modules-carousel .module-card.is-active {
+      pointer-events: auto;
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.28);
+    }
+
+    .modules-carousel .module-card.is-side {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .modules-carousel .module-card--wide {
+      grid-column: auto;
+    }
+
+    .modules-carousel__controls {
+      display: contents;
+    }
+
+    .modules-carousel__nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      flex: none;
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: var(--sd-radius-full);
+      background: var(--sd-background);
+      color: var(--sd-primary);
+      box-shadow: var(--sd-shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: transform 0.2s var(--sd-ease), background 0.2s var(--sd-ease);
+    }
+
+    .modules-carousel__nav--prev { left: 0; }
+    .modules-carousel__nav--next { right: 0; }
+
+    .modules-carousel__nav:hover {
+      transform: translateY(-50%) scale(1.06);
+      background: var(--sd-white);
+    }
+
+    .modules-carousel__nav:focus-visible {
+      outline: 2px solid var(--sd-secondary);
+      outline-offset: 3px;
+    }
+
+    .modules-carousel__nav i {
+      width: 24px;
+      height: 24px;
+    }
+
+    .modules-carousel__dots {
+      display: none;
+    }
+
+    .modules-carousel__dot {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.38);
+      cursor: pointer;
+      transition: background 0.2s var(--sd-ease), transform 0.2s var(--sd-ease), width 0.2s var(--sd-ease);
+    }
+
+    .modules-carousel__dot[aria-selected="true"] {
+      width: 22px;
+      background: var(--sd-secondary);
+    }
+
+    .modules-carousel__dot:focus-visible {
+      outline: 2px solid var(--sd-secondary);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 700px) {
+      .modules-carousel {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 0;
+      }
+
+      .modules-carousel__viewport {
+        height: clamp(400px, 68vw, 480px);
+        overflow: hidden;
+      }
+
+      .modules-carousel .module-card {
+        width: min(300px, 78%);
+        transform: translate(-50%, -50%) translateX(calc(var(--offset) * 38%)) scale(var(--scale-x), var(--scale-y));
+      }
+
+      .modules-carousel__controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        position: relative;
+        z-index: 6;
+        padding: 0 8px;
+      }
+
+      .modules-carousel__nav {
+        position: static;
+        transform: none;
+        width: 44px;
+        height: 44px;
+        flex: none;
+        background: var(--sd-background);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+      }
+
+      .modules-carousel__nav:hover {
+        transform: scale(1.06);
+        background: var(--sd-white);
+      }
+
+      .modules-carousel__dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 7px;
+        max-width: min(220px, 52vw);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .modules-carousel .module-card {
+        transition: none;
       }
     }
 
     .module-card {
       background: var(--sd-background);
-      border-radius: var(--sd-radius-md);
-      padding: 20px 22px;
+      border-radius: var(--sd-radius-sm);
+      padding: 28px 20px 24px;
+      text-align: center;
     }
 
-    .module-card__label {
-      display: block;
-      font-size: var(--sd-fs-caption);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--sd-primary);
-      margin-bottom: 6px;
+    .module-card__icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 16px;
+      background: var(--sd-secondary);
+      border-radius: var(--sd-radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sd-white);
+    }
+
+    .module-card__icon i {
+      width: 20px;
+      height: 20px;
     }
 
     .module-card__name {
       font-family: var(--sd-font-body);
-      font-size: var(--sd-fs-body);
+      font-size: var(--sd-fs-body-sm);
       font-weight: 700;
-      color: var(--sd-text-primary);
-      margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
+      color: var(--sd-primary);
+      margin: 0 0 10px;
+      line-height: 1.35;
+      text-transform: none;
+      letter-spacing: 0;
     }
 
     .module-card__text {
-      margin: 8px 0 0;
-      font-size: var(--sd-fs-body-sm);
-      line-height: 1.6;
+      margin: 0;
+      font-size: var(--sd-fs-caption);
+      line-height: 1.55;
       color: var(--sd-text-secondary);
     }
 
@@ -675,36 +1625,113 @@
       grid-column: 1 / -1;
     }
 
-    .module-card--bonus {
-      background: var(--sd-gold-soft);
-      margin-top: var(--sd-space-3);
-    }
-
     .module-card__tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin: 10px 0 12px;
+      justify-content: center;
+      gap: 6px;
+      margin: 0 0 10px;
     }
 
     .module-card__tags span {
       display: inline-flex;
       align-items: center;
-      font-size: var(--sd-fs-caption);
+      font-size: 0.6875rem;
       font-weight: 600;
-      padding: 4px 12px;
+      padding: 2px 10px;
       border-radius: var(--sd-radius-full);
       background: var(--sd-primary);
       color: var(--sd-white);
     }
 
-    .module-card--bonus .module-card__text + .module-card__text {
-      margin-top: 8px;
+    .section-bonus {
+      background: var(--sd-background);
+      padding: var(--sd-space-10) 0;
     }
 
-    .module-card--bonus strong {
-      color: var(--sd-text-primary);
+    .section-bonus__inner {
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--sd-white);
+      border-radius: var(--sd-radius-lg);
+      padding: 36px 28px 32px;
+      border: 2px solid var(--sd-secondary);
+      box-shadow: 0 16px 40px rgba(14, 90, 67, 0.08);
+      text-align: center;
+    }
+
+    .section-bonus__heading {
+      text-align: center;
+      margin-bottom: var(--sd-space-4);
+    }
+
+    .section-bonus__content {
+      text-align: center;
+    }
+
+    .section-bonus__icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 14px;
+      background: var(--sd-secondary);
+      border-radius: var(--sd-radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sd-white);
+    }
+
+    .section-bonus__icon i {
+      width: 24px;
+      height: 24px;
+    }
+
+    .section-bonus__title {
+      font-family: var(--sd-font-body);
       font-weight: 700;
+      font-size: clamp(1.375rem, 2.8vw, 1.875rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--sd-secondary);
+      margin: 0;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .section-bonus__title strong {
+      color: var(--sd-primary);
+      font-weight: 700;
+    }
+
+    .section-bonus__copy {
+      margin: 0 0 var(--sd-space-3);
+      font-size: var(--sd-fs-body-sm);
+      line-height: 1.65;
+      color: var(--sd-text-secondary);
+    }
+
+    .section-bonus__copy:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-bonus__copy strong {
+      color: var(--sd-primary);
+      font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+      .section-bonus__inner {
+        padding: 28px 20px 24px;
+      }
+    }
+
+    .section-modules__cta {
+      display: flex;
+      justify-content: center;
+    }
+
+    .section-modules__cta .sd-btn--primary .sd-icon {
+      color: var(--sd-primary);
     }
 
     /* ============================================================
@@ -715,9 +1742,10 @@
       padding: var(--sd-space-11) 0 var(--sd-space-12);
     }
 
-    .section-method__inner {
+    .section-method__header {
       max-width: 720px;
-      margin: 0 auto;
+      margin: 0 auto var(--sd-space-7);
+      text-align: center;
     }
 
     .section-method__title {
@@ -737,7 +1765,86 @@
       line-height: 1.25;
       color: var(--sd-primary);
       text-transform: uppercase;
-      margin: 0 0 var(--sd-space-7);
+      margin: 0;
+    }
+
+    .method-compare {
+      max-width: 1100px;
+      margin: 0 auto var(--sd-space-8);
+    }
+
+    .method-card {
+      background: var(--sd-primary);
+      color: var(--sd-white);
+      border-radius: var(--sd-radius-md);
+      padding: 36px 32px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      min-height: 340px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    .method-card__title {
+      margin: 0 0 28px;
+      font-family: var(--sd-font-body);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      color: var(--sd-secondary);
+      text-align: center;
+    }
+
+    .method-card__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .method-card__list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      min-height: 28px;
+      font-size: var(--sd-fs-body-sm);
+      line-height: 1.5;
+      color: var(--sd-white);
+    }
+
+    .method-card__list li::before {
+      content: "";
+      flex: none;
+      width: 8px;
+      height: 8px;
+      margin-top: 7px;
+      border-radius: var(--sd-radius-full);
+      background: var(--sd-secondary);
+      opacity: 0.85;
+    }
+
+    .method-card p {
+      margin: 0;
+      font-size: var(--sd-fs-body);
+      line-height: 1.65;
+      color: var(--sd-white);
+    }
+
+    .method-card p strong {
+      color: var(--sd-secondary);
+      font-weight: 700;
+    }
+
+    .section-method__close {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
     }
 
     .section-method__copy {
@@ -747,18 +1854,13 @@
       color: var(--sd-text-secondary);
     }
 
-    .section-method__copy strong {
-      color: var(--sd-text-primary);
-      font-weight: 700;
-    }
-
     .section-method__quote {
       font-family: var(--sd-font-body);
       font-weight: 700;
       font-size: clamp(1.375rem, 3vw, 1.875rem);
       line-height: 1.3;
       color: var(--sd-primary);
-      margin: var(--sd-space-3) 0 0;
+      margin: 0;
     }
 
     /* ============================================================
@@ -766,7 +1868,7 @@
        ============================================================ */
     .section-offer {
       background: var(--sd-section-white);
-      padding: var(--sd-space-7) 0 var(--sd-space-12);
+      padding: var(--sd-space-5) 0 var(--sd-space-6);
     }
 
     .offer-card {
@@ -781,7 +1883,7 @@
 
     @media (max-width: 767px) {
       .section-offer {
-        padding: var(--sd-space-5) 0 var(--sd-space-10);
+        padding: var(--sd-space-4) 0 var(--sd-space-5);
       }
 
       .offer-card {
@@ -789,8 +1891,8 @@
         scroll-margin-top: 8px;
       }
 
-      .section-offer__price {
-        font-size: clamp(2.25rem, 10vw, 2.75rem);
+      .section-offer__installments {
+        font-size: clamp(1.875rem, 8vw, 2.5rem);
       }
     }
 
@@ -802,13 +1904,14 @@
 
     .section-offer__title {
       font-family: var(--sd-font-body);
-      font-size: clamp(1.375rem, 3.2vw, 1.875rem);
+      font-size: clamp(0.9375rem, 3.85vw, 1.625rem);
       font-weight: 700;
       color: var(--sd-primary);
       text-align: center;
       text-transform: uppercase;
       margin: 0 0 var(--sd-space-7);
       line-height: 1.3;
+      white-space: nowrap;
     }
 
     .offer-list {
@@ -863,14 +1966,29 @@
       margin: 0 0 var(--sd-space-3);
     }
 
-    .section-offer__price {
+    .section-offer__installments {
+      margin: 0;
       font-family: var(--sd-font-body);
-      font-size: clamp(2.75rem, 11vw, 4.25rem);
+      font-size: clamp(2rem, 7vw, 3.25rem);
       font-weight: 700;
       color: var(--sd-primary);
-      margin: 0;
-      line-height: 1;
+      line-height: 1.1;
       letter-spacing: -0.02em;
+    }
+
+    .section-offer__installments strong {
+      color: var(--sd-secondary);
+      font-weight: 700;
+    }
+
+    .section-offer__price {
+      font-family: var(--sd-font-body);
+      font-size: var(--sd-fs-body);
+      font-weight: 600;
+      color: var(--sd-text-secondary);
+      margin: 10px 0 0;
+      line-height: 1.3;
+      letter-spacing: 0;
     }
 
     .section-offer__copy {
@@ -1012,51 +2130,96 @@
        SEÇÃO — CTA final
        ============================================================ */
     .section-final-cta {
-      background: var(--sd-section-white);
-      padding: var(--sd-space-11) 0 var(--sd-space-12);
+      background: var(--sd-primary);
+      padding: var(--sd-space-9) 0 var(--sd-space-10);
     }
 
-    .section-final-cta__inner {
-      max-width: 720px;
+    .section-final-cta__layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sd-space-6);
+      align-items: center;
+      max-width: 1100px;
       margin: 0 auto;
+    }
+
+    @media (min-width: 900px) {
+      .section-final-cta__layout {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 40px;
+      }
+    }
+
+    .section-final-cta__content {
+      max-width: none;
     }
 
     .section-final-cta__heading {
       font-family: var(--sd-font-body);
-      font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+      font-size: clamp(1.375rem, 3.2vw, 1.875rem);
       font-weight: 700;
-      line-height: 1.2;
-      color: var(--sd-text-primary);
+      line-height: 1.25;
+      color: var(--sd-white);
       text-transform: uppercase;
-      margin: 0 0 var(--sd-space-7);
-    }
-
-    .section-final-cta__copy {
-      margin: 0 0 var(--sd-space-4);
-      font-size: var(--sd-fs-body);
-      line-height: 1.7;
-      color: var(--sd-text-secondary);
-    }
-
-    .section-final-cta__time {
-      font-size: var(--sd-fs-body-lg);
-      font-weight: 700;
-      color: var(--sd-primary);
       margin: 0 0 var(--sd-space-5);
     }
 
-    .section-final-cta__invite {
+    .section-final-cta__copy {
+      margin: 0 0 var(--sd-space-3);
+      font-size: var(--sd-fs-body-sm);
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .section-final-cta__time {
       font-size: var(--sd-fs-body);
       font-weight: 700;
-      color: var(--sd-text-primary);
-      margin: var(--sd-space-6) 0 var(--sd-space-5);
+      color: var(--sd-secondary);
+      margin: 0 0 var(--sd-space-4);
+    }
+
+    .section-final-cta__invite {
+      font-size: var(--sd-fs-body-sm);
+      font-weight: 700;
+      color: var(--sd-white);
+      margin: var(--sd-space-5) 0 0;
+    }
+
+    .section-final-cta__visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .section-final-cta__media {
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 1;
+      border-radius: var(--sd-radius-lg);
+      overflow: hidden;
+      background: var(--sd-surface);
+    }
+
+    .section-final-cta__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .section-final-cta__cta {
+      display: flex;
+      justify-content: center;
+      width: 100%;
     }
 
     .section-final-cta__cta .sd-btn {
       white-space: normal;
       height: auto;
-      min-height: 56px;
-      padding: 16px 32px;
+      min-height: 52px;
+      padding: 14px 28px;
       text-align: center;
       line-height: 1.3;
     }
@@ -1065,28 +2228,18 @@
       color: var(--sd-primary);
     }
 
-    .section-final-cta__price {
-      margin: var(--sd-space-4) 0 0;
-      font-size: var(--sd-fs-body-sm);
-      color: var(--sd-text-secondary);
-    }
-
-    .section-final-cta__price strong {
-      color: var(--sd-primary);
-      font-weight: 700;
-    }
-
     /* ============================================================
        SEÇÃO — Fechamento da marca
        ============================================================ */
     .section-close {
-      background: var(--sd-background);
+      background: #fff;
       padding: var(--sd-space-10) 0 var(--sd-space-11);
     }
 
     .section-close__inner {
-      max-width: 720px;
+      max-width: 1040px;
       margin: 0 auto;
+      text-align: center;
     }
 
     .section-close__brand {
@@ -1102,16 +2255,38 @@
 
     .section-close__list {
       display: flex;
-      flex-direction: column;
-      gap: var(--sd-space-3);
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px 16px;
     }
 
-    .section-close__list p {
+    .section-close__chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       margin: 0;
-      font-size: var(--sd-fs-body);
+      padding: 10px 18px;
+      border-radius: var(--sd-radius-full);
+      background: var(--sd-secondary);
+      color: var(--sd-primary);
+      font-size: var(--sd-fs-body-sm);
       font-weight: 700;
-      line-height: 1.5;
-      color: var(--sd-text-primary);
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .section-close__chip i {
+      flex: none;
+      width: 18px;
+      height: 18px;
+    }
+
+    @media (max-width: 767px) {
+      .section-close__chip {
+        padding: 8px 14px;
+        font-size: var(--sd-fs-caption);
+      }
     }
 
     /* ============================================================
@@ -1133,12 +2308,11 @@
 
   <header class="header" id="inicio">
     <div class="ds-container header__grid">
+      <h1 class="header__brand">Divina Marmita</h1>
 
-      <div class="header__content">
-        <h1 class="header__brand">Divina Marmita</h1>
-
+      <div class="header__copy">
         <p class="header__subtitle">
-          Aprenda a preparar as marmitas da semana de uma vez só e tenha comida caseira, saudável e gostosa pronta para os seus dias.
+          Aprenda a fazer marmitas saudáveis em 2 horas para a semana toda.
         </p>
 
         <p class="header__desc">
@@ -1148,27 +2322,26 @@
         <p class="header__aside">
           Tudo em aulas gravadas, para você assistir no seu ritmo, de onde estiver.
         </p>
-
-        <a href="#oferta" class="sd-btn sd-btn--secondary sd-btn--lg header__cta">
-          <i data-lucide="utensils-crossed" class="sd-icon"></i>
-          Quero aprender a organizar minhas marmitas
-        </a>
       </div>
 
-      <div class="header__media" aria-hidden="true">
+      <div class="header__media">
         <div class="header__visual">
-          <span class="header__visual-icon">
-            <i data-lucide="chef-hat"></i>
-          </span>
-          <p class="header__visual-kicker">Curso gravado</p>
-          <p class="header__visual-title">Sua semana organizada na cozinha</p>
-          <ul class="header__visual-list">
-            <li><i data-lucide="check"></i> 4 cardápios completos</li>
-            <li><i data-lucide="check"></i> Listas de compras</li>
-            <li><i data-lucide="check"></i> Técnicas de congelamento</li>
-          </ul>
+          <img
+            src="assets/img/hero.png"
+            alt="Mulher na cozinha, pronta para organizar as marmitas da semana"
+              width="786"
+              height="1021"
+            loading="eager"
+            decoding="sync"
+            fetchpriority="high"
+          />
         </div>
       </div>
+
+      <a href="#oferta" class="sd-btn sd-btn--secondary sd-btn--lg header__cta">
+        <i data-lucide="utensils-crossed" class="sd-icon"></i>
+        Quero aprender a organizar minhas marmitas
+      </a>
     </div>
 
     <a href="#identificou" class="header__scroll" aria-label="Rolar para o conteúdo">
@@ -1177,25 +2350,62 @@
   </header>
 
   <main id="conteudo">
-    <section class="section-pains" id="identificou" aria-labelledby="pains-title">
-      <div class="ds-container">
-        <div class="section-pains__inner">
-          <h2 class="section-pains__title" id="pains-title">Você também sente que...</h2>
+    <section class="section-pains" id="identificou" aria-labelledby="pains-intro-title">
+      <div class="section-pains__stage">
+        <img
+          class="section-pains__bg"
+          src="assets/img/pains.png"
+          alt=""
+          width="2560"
+          height="1440"
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
+        />
 
-          <div class="section-pains__list">
-            <p>Chega a segunda-feira prometendo que vai comer melhor, mas quando a semana começa tudo fica corrido?</p>
-            <p>Abre a geladeira e não sabe o que preparar?</p>
-            <p>Acaba pedindo delivery porque não teve tempo de cozinhar?</p>
-            <p>Compra um monte de ingredientes no mercado e depois acaba desperdiçando comida?</p>
+        <h2 class="section-pains__intro" id="pains-intro-title" data-reveal="down">Você também sente que...</h2>
+
+        <div class="section-pains__overlay">
+          <div class="section-pains__col section-pains__col--left">
+            <article class="pain-card" data-reveal="left" style="--reveal-delay: 80ms">
+              <span class="pain-card__icon" aria-hidden="true"><i data-lucide="calendar"></i></span>
+              <p class="pain-card__text">Chega a <strong>segunda-feira</strong> prometendo que vai <strong>comer melhor</strong>, mas quando a semana começa tudo fica<br />corrido?</p>
+            </article>
+            <article class="pain-card" data-reveal="left" style="--reveal-delay: 180ms">
+              <span class="pain-card__icon" aria-hidden="true"><i data-lucide="refrigerator"></i></span>
+              <p class="pain-card__text">Abre a geladeira e <strong>não sabe</strong> o que preparar?</p>
+            </article>
+            <article class="pain-card" data-reveal="left" style="--reveal-delay: 280ms">
+              <span class="pain-card__icon" aria-hidden="true"><i data-lucide="bike"></i></span>
+              <p class="pain-card__text">Acaba pedindo <strong>delivery</strong> porque <strong>não teve tempo</strong> de cozinhar?</p>
+            </article>
           </div>
 
-          <div class="section-pains__list">
-            <p>Já tentou congelar comida e ela ficou com textura, sabor ou aparência ruins?</p>
-            <p>Passa horas na cozinha preparando comida para a semana?</p>
-            <p>Se identificou?</p>
-            <p class="section-pains__close">Foi pensando exatamente nisso que eu criei o <strong>Divina Marmita</strong>.</p>
+          <div class="section-pains__center" aria-hidden="true"></div>
+
+          <div class="section-pains__col section-pains__col--right">
+            <article class="pain-card" data-reveal="right" style="--reveal-delay: 80ms">
+              <span class="pain-card__icon" aria-hidden="true"><i data-lucide="banknote"></i></span>
+              <p class="pain-card__text">Compra um monte de<br />ingredientes no mercado<br />e depois acaba <strong>desperdiçando</strong><br /><strong>comida</strong>?</p>
+            </article>
+            <article class="pain-card" data-reveal="right" style="--reveal-delay: 180ms">
+              <span class="pain-card__icon" aria-hidden="true"><i data-lucide="snowflake"></i></span>
+              <p class="pain-card__text">Já tentou congelar comida e ela ficou<br />com textura, sabor ou aparência ruins?</p>
+            </article>
+            <article class="pain-card" data-reveal="right" style="--reveal-delay: 280ms">
+              <span class="pain-card__icon" aria-hidden="true"><i data-lucide="watch"></i></span>
+              <p class="pain-card__text">Passa horas na cozinha preparando comida para a semana?</p>
+            </article>
           </div>
         </div>
+
+        <aside class="section-pains__closing" aria-label="Se identificou?" data-reveal="up" style="--reveal-delay: 220ms">
+          <span class="section-pains__closing-icon" aria-hidden="true"><i data-lucide="lightbulb"></i></span>
+          <div class="section-pains__closing-copy">
+            <p class="section-pains__closing-title">Se identificou?</p>
+            <p class="section-pains__closing-text">Foi pensando exatamente nisso que eu criei o <strong>Divina Marmita</strong></p>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -1206,95 +2416,33 @@
           <p class="section-for-you__title" id="para-voce-title">foi feito para você que:</p>
         </header>
 
-        <div class="section-for-you__grid">
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Quer comer comida caseira durante a semana sem precisar cozinhar todos os dias.</p>
+        <div class="dominate-compare">
+          <article class="dominate-card">
+            <ul class="dominate-card__list">
+              <li><i data-lucide="sparkles"></i> Quer comer comida caseira durante a semana sem precisar cozinhar todos os dias.</li>
+              <li><i data-lucide="sparkles"></i> Quer ter uma alimentação mais saudável, mas vive na correria.</li>
+              <li><i data-lucide="sparkles"></i> Não sabe o que comprar no mercado para organizar as refeições.</li>
+              <li><i data-lucide="sparkles"></i> Quer aprender a montar marmitas variadas e gostosas.</li>
+              <li><i data-lucide="sparkles"></i> Quer economizar evitando compras por impulso e desperdício de alimentos.</li>
+            </ul>
           </article>
 
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <div class="dominate-compare__badge" aria-hidden="true">
+            <span class="dominate-badge">
+              <span class="dominate-badge__inner">
+                <i data-lucide="arrow-left-right"></i>
               </span>
             </span>
-            <p class="for-you-card__text">Quer ter uma alimentação mais saudável, mas vive na correria.</p>
-          </article>
+          </div>
 
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Não sabe o que comprar no mercado para organizar as refeições.</p>
-          </article>
-
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Quer aprender a montar marmitas variadas e gostosas.</p>
-          </article>
-
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Quer economizar evitando compras por impulso e desperdício de alimentos.</p>
-          </article>
-
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Quer aprender a congelar corretamente suas refeições.</p>
-          </article>
-
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Quer otimizar o tempo na cozinha e fazer mais em menos tempo.</p>
-          </article>
-
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Quer deixar a comida da semana praticamente pronta.</p>
-          </article>
-
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Quer ter receitas práticas para aqueles dias em que não preparou marmita.</p>
-          </article>
-
-          <article class="for-you-card">
-            <span class="for-you-card__icon" aria-hidden="true">
-              <span class="for-you-card__icon-inner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </span>
-            </span>
-            <p class="for-you-card__text">Quer finalmente transformar a cozinha em uma aliada da sua rotina.</p>
+          <article class="dominate-card">
+            <ul class="dominate-card__list">
+              <li><i data-lucide="sparkles"></i> Quer aprender a congelar corretamente suas refeições.</li>
+              <li><i data-lucide="sparkles"></i> Quer otimizar o tempo na cozinha e fazer mais em menos tempo.</li>
+              <li><i data-lucide="sparkles"></i> Quer deixar a comida da semana praticamente pronta.</li>
+              <li><i data-lucide="sparkles"></i> Quer ter receitas práticas para aqueles dias em que não preparou marmita.</li>
+              <li><i data-lucide="sparkles"></i> Quer finalmente transformar a cozinha em uma aliada da sua rotina.</li>
+            </ul>
           </article>
         </div>
 
@@ -1309,24 +2457,54 @@
 
     <section class="section-imagine" id="imagine" aria-labelledby="imagine-title">
       <div class="ds-container">
-        <div class="section-imagine__inner">
-          <h2 class="section-imagine__title" id="imagine-title">Imagine chegar ao final do domingo com...</h2>
+        <h2 class="section-imagine__title" id="imagine-title">Imagina chegar ao final do domingo com...</h2>
 
-          <div class="section-imagine__list">
-            <p>A geladeira organizada.</p>
-            <p>As marmitas da semana prontas.</p>
-            <p>As compras já planejadas.</p>
-            <p>Os alimentos porcionados.</p>
-            <p>Tudo devidamente congelado.</p>
+        <div class="section-imagine__layout">
+          <div class="imagine-photos">
+            <article class="imagine-mini">
+              <div class="imagine-mini__photo">
+                <span class="imagine-mini__frame">
+                  <img src="assets/img/imagine-01.png" alt="As marmitas da semana prontas" loading="eager" />
+                </span>
+              </div>
+              <p class="imagine-mini__text">As marmitas da semana prontas.</p>
+            </article>
+            <article class="imagine-mini">
+              <div class="imagine-mini__photo">
+                <span class="imagine-mini__frame">
+                  <img src="assets/img/imagine-02.png" alt="As compras já planejadas" loading="eager" />
+                </span>
+              </div>
+              <p class="imagine-mini__text">As compras já planejadas.</p>
+            </article>
+            <article class="imagine-mini">
+              <div class="imagine-mini__photo">
+                <span class="imagine-mini__frame">
+                  <img src="assets/img/imagine-03.png" alt="Os alimentos porcionados" loading="eager" />
+                </span>
+              </div>
+              <p class="imagine-mini__text">Os alimentos porcionados.</p>
+            </article>
+            <article class="imagine-mini">
+              <div class="imagine-mini__photo">
+                <span class="imagine-mini__frame">
+                  <img src="assets/img/imagine-04.png" alt="Tudo devidamente congelado" loading="eager" />
+                </span>
+              </div>
+              <p class="imagine-mini__text">Tudo devidamente congelado.</p>
+            </article>
           </div>
 
-          <p class="section-imagine__lead">E a tranquilidade de saber que, nos próximos dias, você não vai precisar pensar:</p>
-
-          <p class="section-imagine__quote">“O que eu vou comer hoje?”</p>
-
-          <p class="section-imagine__copy">É isso que eu quero te ensinar no <strong class="brand">Divina Marmita</strong>.</p>
-          <p class="section-imagine__copy">Não é simplesmente um curso de receitas.</p>
-          <p class="section-imagine__copy">É um método para você aprender a <strong>planejar, comprar, preparar, congelar e organizar suas refeições</strong>, tornando sua rotina muito mais prática.</p>
+          <article class="imagine-card imagine-card--story">
+            <div class="imagine-card__photo">
+              <img src="assets/img/geladeira.png" alt="A geladeira organizada" loading="lazy" />
+            </div>
+            <p class="imagine-card__kicker">A geladeira organizada.</p>
+            <p class="imagine-card__quote">“O que eu vou comer hoje?”</p>
+            <p class="imagine-card__copy">É isso que eu quero te ensinar no <strong class="brand">Divina Marmita</strong>.</p>
+            <p class="imagine-card__copy">Não é simplesmente um curso de receitas.</p>
+            <p class="imagine-card__copy">É um método para você aprender a <strong>planejar, comprar, preparar, congelar e organizar suas refeições</strong>, tornando sua rotina muito mais prática.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -1351,42 +2529,53 @@
           </ul>
 
           <p class="section-how__copy">Assim, você não precisa começar do zero toda semana.</p>
+        </div>
+      </div>
+    </section>
 
-          <div class="section-how__block">
-            <h3 class="section-how__kicker">Lista de compras do mercado</h3>
-            <p class="section-how__copy">Chega de ir ao mercado sem saber exatamente o que comprar.</p>
-            <p class="section-how__copy">Cada cardápio vem acompanhado de uma <strong>lista de compras</strong>, para você saber quais ingredientes precisa ter em casa antes de começar o preparo.</p>
-            <p class="section-how__copy">Você economiza tempo no mercado e diminui as chances de comprar coisas que acabam esquecidas na geladeira.</p>
+    <section class="section-pillars" id="pilares" aria-label="Lista de compras, congelamento, tempo e economia">
+      <div class="ds-container">
+        <div class="section-pillars__grid">
+          <article class="module-card how-card">
+            <div class="module-card__icon" aria-hidden="true"><i data-lucide="shopping-cart"></i></div>
+            <h3 class="module-card__name">Lista de compras do mercado:</h3>
+            <p class="module-card__text">Cada cardápio vem acompanhado de uma <strong>lista de compras</strong>, para você saber quais ingredientes precisa ter em casa antes de começar o preparo.</p>
+            <p class="module-card__text">Você economiza tempo e dinheiro.</p>
+          </article>
+
+          <article class="module-card how-card">
+            <div class="module-card__icon" aria-hidden="true"><i data-lucide="snowflake"></i></div>
+            <h3 class="module-card__name">Técnicas de congelamento:</h3>
+            <p class="module-card__text">Você vai aprender <strong>como congelar e descongelar corretamente diferentes preparações</strong>, para preservar ao máximo a qualidade das suas marmitas.</p>
+          </article>
+
+          <article class="module-card how-card">
+            <div class="module-card__icon" aria-hidden="true"><i data-lucide="timer"></i></div>
+            <h3 class="module-card__name">Como otimizar o tempo na cozinha:</h3>
+            <p class="module-card__text">Estratégias para <strong>aproveitar melhor o seu tempo</strong>, organizando as etapas do preparo para fazer várias coisas ao mesmo tempo e evitar trabalho desnecessário.</p>
+          </article>
+
+          <article class="module-card how-card">
+            <div class="module-card__icon" aria-hidden="true"><i data-lucide="piggy-bank"></i></div>
+            <h3 class="module-card__name">Como economizar na cozinha:</h3>
+            <p class="module-card__text">Estratégias para aproveitar melhor os ingredientes, reduzir desperdícios, comprar apenas o necessário.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-bonus" id="bonus" aria-labelledby="bonus-title">
+      <div class="ds-container">
+        <div class="section-bonus__inner">
+          <div class="section-bonus__heading">
+            <div class="section-bonus__icon" aria-hidden="true"><i data-lucide="gift"></i></div>
+            <h2 class="section-bonus__title" id="bonus-title">Módulo bônus: <strong>Saladas</strong></h2>
           </div>
 
-          <div class="section-how__block">
-            <h3 class="section-how__kicker">Técnicas de congelamento</h3>
-            <p class="section-how__copy">Esse é um dos grandes diferenciais do Divina Marmita.</p>
-            <p class="section-how__copy">Porque não adianta preparar a comida da semana se, depois de congelada, ela perde sabor, textura ou fica com aquela aparência nada apetitosa.</p>
-            <p class="section-how__copy">Você vai aprender <strong>como congelar e descongelar corretamente diferentes preparações</strong>, para preservar ao máximo a qualidade das suas marmitas.</p>
-          </div>
-
-          <div class="section-how__block">
-            <h3 class="section-how__kicker">Como otimizar o tempo na cozinha</h3>
-            <p class="section-how__copy">Você não precisa passar o domingo inteiro cozinhando.</p>
-            <p class="section-how__copy">Vou te ensinar estratégias para <strong>aproveitar melhor o seu tempo</strong>, organizando as etapas do preparo para fazer várias coisas ao mesmo tempo e evitar trabalho desnecessário.</p>
-            <p class="section-how__lead">A ideia é simples:</p>
-            <p class="section-how__highlight">menos tempo na cozinha + mais comida pronta.</p>
-          </div>
-
-          <div class="section-how__block">
-            <h3 class="section-how__kicker">Como economizar na cozinha</h3>
-            <p class="section-how__copy">Com planejamento, você consegue aproveitar melhor os ingredientes e reduzir desperdícios.</p>
-            <p class="section-how__lead">Você vai aprender estratégias para:</p>
-            <ul class="section-how__list">
-              <li><i data-lucide="check"></i> Planejar suas compras.</li>
-              <li><i data-lucide="check"></i> Aproveitar melhor os ingredientes.</li>
-              <li><i data-lucide="check"></i> Evitar desperdícios.</li>
-              <li><i data-lucide="check"></i> Organizar os preparos.</li>
-              <li><i data-lucide="check"></i> Comprar apenas o necessário.</li>
-              <li><i data-lucide="check"></i> Fazer sua comida render mais.</li>
-            </ul>
-            <p class="section-how__copy">Porque alimentação saudável não precisa significar gastar uma fortuna no mercado.</p>
+          <div class="section-bonus__content">
+            <p class="section-bonus__copy">E para deixar suas refeições ainda mais completas...</p>
+            <p class="section-bonus__copy">Você também recebe um módulo especial de <strong>saladas</strong>.</p>
+            <p class="section-bonus__copy">Vou te ensinar como higienizar e armazenar saladas para durarem mais tempo.</p>
           </div>
         </div>
       </div>
@@ -1394,87 +2583,148 @@
 
     <section class="section-modules" id="modulos" aria-labelledby="modules-title">
       <div class="ds-container">
-        <h2 class="section-modules__title" id="modules-title">O que você vai aprender</h2>
+        <h2 class="section-modules__title" id="modules-title">
+          O que você vai<br>
+          <strong>aprender</strong>
+        </h2>
 
-        <div class="modules-grid">
-          <article class="module-card">
-            <span class="module-card__label">Módulo 1</span>
-            <h3 class="module-card__name">Boas-vindas</h3>
-          </article>
+        <div class="modules-carousel" data-modules-carousel>
+          <div class="modules-carousel__viewport">
+            <div class="modules-carousel__track">
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="hand-heart"></i></div>
+                <h3 class="module-card__name">Módulo 1 — Boas-vindas:</h3>
+                <p class="module-card__text">Apresentação do curso e quem sou eu.</p>
+              </article>
 
-          <article class="module-card">
-            <span class="module-card__label">Módulo 2</span>
-            <h3 class="module-card__name">Técnicas</h3>
-            <p class="module-card__text">Aprenda o que pode ser congelado, como armazenar, descongelar e preservar melhor suas preparações.</p>
-          </article>
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="snowflake"></i></div>
+                <h3 class="module-card__name">Módulo 2 — Técnicas:</h3>
+                <p class="module-card__text">Aprenda o que pode ser congelado, como armazenar, descongelar e preservar melhor suas preparações.</p>
+              </article>
 
-          <article class="module-card">
-            <span class="module-card__label">Módulo 3</span>
-            <h3 class="module-card__name">Ajudantes na cozinha</h3>
-            <p class="module-card__text">Estratégias para fazer mais preparações em menos tempo e deixar sua cozinha muito mais eficiente.</p>
-          </article>
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="timer"></i></div>
+                <h3 class="module-card__name">Módulo 3 — Ajudantes na cozinha:</h3>
+                <p class="module-card__text">Estratégias para fazer mais preparações em menos tempo e deixar sua cozinha muito mais eficiente.</p>
+              </article>
 
-          <article class="module-card">
-            <span class="module-card__label">Módulo 4</span>
-            <h3 class="module-card__name">Independência na cozinha</h3>
-            <p class="module-card__text">Como planejar sua semana, organizar o preparo das refeições e criar seus próprios cardápios.</p>
-          </article>
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="calendar-check"></i></div>
+                <h3 class="module-card__name">Módulo 4 — Independência na cozinha:</h3>
+                <p class="module-card__text">Como planejar sua semana, organizar o preparo das refeições e criar seus próprios cardápios.</p>
+              </article>
 
-          <article class="module-card">
-            <span class="module-card__label">Módulo 5</span>
-            <h3 class="module-card__name">Temperão caseiro</h3>
-            <p class="module-card__text">Como preparar um temperão que vai otimizar seu tempo na cozinha.</p>
-          </article>
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="leaf"></i></div>
+                <h3 class="module-card__name">Módulo 5 — Temperão caseiro:</h3>
+                <p class="module-card__text">Como preparar um temperão que vai otimizar seu tempo na cozinha.</p>
+              </article>
 
-          <article class="module-card">
-            <span class="module-card__label">Módulo 6</span>
-            <h3 class="module-card__name">Começando os cardápios</h3>
-            <p class="module-card__text">Como funcionam os cardápios da Divina Marmita.</p>
-          </article>
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="clipboard-list"></i></div>
+                <h3 class="module-card__name">Módulo 6 — Começando os cardápios:</h3>
+                <p class="module-card__text">Como funcionam os cardápios da Divina Marmita.</p>
+              </article>
 
-          <article class="module-card module-card--wide">
-            <span class="module-card__label">Módulos 7 a 10</span>
-            <h3 class="module-card__name">Cardápios 1, 2, 3 e 4</h3>
-            <div class="module-card__tags">
-              <span>Módulo 7 — Cardápio 1</span>
-              <span>Módulo 8 — Cardápio 2</span>
-              <span>Módulo 9 — Cardápio 3</span>
-              <span>Módulo 10 — Cardápio 4</span>
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="utensils-crossed"></i></div>
+                <h3 class="module-card__name">Módulo 7 — Cardápio 1:</h3>
+                <p class="module-card__text">Delicioso cardápio com uma das minhas receitas favoritas em uma versão saudável e sem leite: frango cremoso à Toscana. Além de uma receita com peixe e outros pratos com frango, arroz e legumes saborosos. Compondo as marmitas da semana de forma colorida e saudável.</p>
+              </article>
+
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="beef"></i></div>
+                <h3 class="module-card__name">Módulo 8 — Cardápio 2:</h3>
+                <p class="module-card__text">A proteína desse cardápio é a carne, mas preparada de diversas formas e sabores! Resultando em marmitas que não enjoam e com alguns ingredientes sofisticados não tão comuns em marmitas, como o arroz negro, maracujá e cuscuz marroquino.</p>
+              </article>
+
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="salad"></i></div>
+                <h3 class="module-card__name">Módulo 9 — Cardápio 3:</h3>
+                <p class="module-card__text">Esse cardápio tem uma inspiração na culinária árabe, então trago receitas com berinjela, lentilha e nozes. Tudo delicioso para fugir da “mesmisse”.</p>
+              </article>
+
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="soup"></i></div>
+                <h3 class="module-card__name">Módulo 10 — Cardápio 4:</h3>
+                <p class="module-card__text">Aqui ensino o clássico arroz e feijão com as técnicas de congelamento. Além de receitas como creme de milho, torta de abobrinha sem glúten, costelinha de porco, frango desfiado e legumes variados.</p>
+              </article>
+
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="shuffle"></i></div>
+                <h3 class="module-card__name">Módulo 11 — Coringa:</h3>
+                <p class="module-card__text">Transforme 1 proteína em várias receitas.</p>
+              </article>
+
+              <article class="module-card">
+                <div class="module-card__icon" aria-hidden="true"><i data-lucide="cooking-pot"></i></div>
+                <h3 class="module-card__name">Módulo 12 — Receitas:</h3>
+                <p class="module-card__text">Receitas saudáveis para evitar desperdício e uso de produtos ultraprocessados no dia a dia (como por exemplo: requeijão).</p>
+              </article>
             </div>
-            <p class="module-card__text">Cada um é separado em aulas gravadas onde mostro todo o preparo dos vegetais, das carnes, cozinho e faço a finalização. Em cada módulo há um cardápio completo para 1 semana, com a lista de ingredientes em PDF para você utilizar no mercado sem perder tempo e sem comprar ingredientes que não vai usar.</p>
-          </article>
+          </div>
 
-          <article class="module-card">
-            <span class="module-card__label">Módulo 11</span>
-            <h3 class="module-card__name">Coringa</h3>
-            <p class="module-card__text">Transforme 1 proteína em várias receitas.</p>
-          </article>
-
-          <article class="module-card">
-            <span class="module-card__label">Módulo 12</span>
-            <h3 class="module-card__name">Receitas</h3>
-            <p class="module-card__text">Receitas saudáveis para evitar desperdício e uso de produtos ultraprocessados no dia a dia (como por exemplo: requeijão).</p>
-          </article>
+          <div class="modules-carousel__controls">
+            <button type="button" class="modules-carousel__nav modules-carousel__nav--prev" aria-label="Módulo anterior">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="modules-carousel__dots" data-carousel-dots role="tablist" aria-label="Módulos do carrossel"></div>
+            <button type="button" class="modules-carousel__nav modules-carousel__nav--next" aria-label="Próximo módulo">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
         </div>
 
-        <article class="module-card module-card--bonus">
-          <span class="module-card__label">Módulo bônus</span>
-          <h3 class="module-card__name">Saladas</h3>
-          <p class="module-card__text">E para deixar suas refeições ainda mais completas, você também recebe um módulo especial de <strong>saladas</strong>.</p>
-          <p class="module-card__text">Você vai aprender como armazenar por mais tempo e combinações práticas, gostosas e variadas para acompanhar suas refeições — para parar de pensar que salada precisa ser sempre a mesma coisa.</p>
-          <p class="module-card__text">Porque comer saudável também pode ser gostoso e variado.</p>
-        </article>
+        <div class="section-modules__cta">
+          <a href="#oferta" class="sd-btn sd-btn--primary sd-btn--lg">
+            <i data-lucide="utensils-crossed" class="sd-icon"></i>
+            Quero entrar no Divina Marmita
+          </a>
+        </div>
       </div>
     </section>
 
     <section class="section-method" id="metodo" aria-labelledby="method-title">
       <div class="ds-container">
-        <div class="section-method__inner">
+        <header class="section-method__header">
           <h2 class="section-method__title" id="method-title">Mais do que receitas.</h2>
           <p class="section-method__subtitle">Uma nova forma de organizar sua alimentação.</p>
+        </header>
 
-          <p class="section-method__copy">Depois de aprender o método, você não vai depender de um cardápio pronto para sempre.</p>
-          <p class="section-method__copy">Você vai entender <strong>como organizar sua própria semana</strong>, escolher melhor os ingredientes, planejar suas compras, otimizar seu tempo e preparar suas refeições de maneira muito mais inteligente.</p>
+        <div class="dominate-compare method-compare">
+          <article class="method-card">
+            <h3 class="method-card__title">Antes</h3>
+            <ul class="method-card__list" aria-label="Antes">
+              <li>Não sabe o que vai comer na semana.</li>
+              <li>Compra sem planejamento e desperdiça comida.</li>
+              <li>Passa horas na cozinha todos os dias.</li>
+              <li>Congela e a comida perde sabor e textura.</li>
+              <li>Acaba pedindo delivery na correria.</li>
+            </ul>
+          </article>
+
+          <div class="dominate-compare__badge" aria-hidden="true">
+            <span class="dominate-badge">
+              <span class="dominate-badge__inner">
+                <i data-lucide="arrow-left-right"></i>
+              </span>
+            </span>
+          </div>
+
+          <article class="method-card">
+            <h3 class="method-card__title">Depois</h3>
+            <ul class="method-card__list" aria-label="Depois">
+              <li>Marmitas da semana prontas e organizadas.</li>
+              <li>Lista de compras clara, sem desperdício.</li>
+              <li>Prepara tudo de uma vez, com menos tempo.</li>
+              <li>Congela e descongela do jeito certo.</li>
+              <li>Comida caseira sempre à mão.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section-method__close">
           <p class="section-method__copy">O objetivo é que você consiga olhar para a sua cozinha e pensar:</p>
           <p class="section-method__quote">“Eu sei exatamente o que fazer.”</p>
         </div>
@@ -1484,7 +2734,7 @@
     <section class="section-offer" aria-labelledby="oferta-title">
       <div class="ds-container">
         <div class="offer-card" id="oferta">
-          <h2 class="section-offer__title" id="oferta-title">O que você leva<br>entrando hoje:</h2>
+          <h2 class="section-offer__title" id="oferta-title">O que você leva entrando hoje:</h2>
 
           <ul class="offer-list" aria-label="Itens inclusos">
             <li class="offer-item"><i data-lucide="check"></i> 4 cardápios completos para a semana</li>
@@ -1501,19 +2751,49 @@
 
           <div class="section-offer__pricing">
             <p class="section-offer__kicker">E tudo isso por apenas:</p>
-            <p class="section-offer__price">R$&nbsp;147</p>
+            <p class="section-offer__installments"><strong>12x de R$&nbsp;15,20</strong></p>
+            <p class="section-offer__price">ou R$&nbsp;147,00 à vista</p>
           </div>
 
           <p class="section-offer__copy">Você pode ter acesso à <strong>Divina Marmita</strong> e aprender a organizar suas refeições por muito menos do que gastaria em algumas semanas de delivery.</p>
 
           <div class="section-offer__cta">
-            <a href="#oferta" class="sd-btn sd-btn--primary sd-btn--lg">
+            <a href="https://pay.hotmart.com/D94573867R?off=63663e3n&checkoutMode=10&bid=1787592702182" class="sd-btn sd-btn--primary sd-btn--lg">
               <i data-lucide="utensils-crossed" class="sd-icon"></i>
               Quero entrar no Divina Marmita
             </a>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <p class="section-offer__note">Acesso por 12 meses.</p>
+    <section class="section-final-cta" id="cta-final" aria-labelledby="cta-final-title">
+      <div class="ds-container">
+        <div class="section-final-cta__layout">
+          <div class="section-final-cta__content">
+            <h2 class="section-final-cta__heading" id="cta-final-title">Chega de depender do delivery para comer bem.</h2>
+
+            <p class="section-final-cta__copy">Você não precisa passar horas todos os dias na cozinha.</p>
+            <p class="section-final-cta__copy">Também não precisa viver de comida sem graça só porque quer se alimentar melhor.</p>
+            <p class="section-final-cta__copy">Com planejamento, organização e as técnicas certas, é possível preparar comida gostosa para a semana, economizar no mercado e ganhar de volta algo que vale muito:</p>
+            <p class="section-final-cta__time">seu tempo.</p>
+            <p class="section-final-cta__copy">Eu quero te mostrar como fazer isso de uma maneira simples e possível para a vida real.</p>
+
+            <p class="section-final-cta__invite">Vem organizar sua cozinha comigo.</p>
+          </div>
+
+          <div class="section-final-cta__visual">
+            <div class="section-final-cta__media">
+              <img src="assets/img/cta-final.png" alt="Marmitas da semana prontas na mesa" loading="lazy" />
+            </div>
+
+            <div class="section-final-cta__cta">
+              <a href="#oferta" class="sd-btn sd-btn--primary sd-btn--lg">
+                <i data-lucide="utensils-crossed" class="sd-icon"></i>
+                Quero entrar no Divina Marmita
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1606,39 +2886,23 @@
       </div>
     </section>
 
-    <section class="section-final-cta" id="cta-final" aria-labelledby="cta-final-title">
-      <div class="ds-container">
-        <div class="section-final-cta__inner">
-          <h2 class="section-final-cta__heading" id="cta-final-title">Chega de depender do delivery para comer bem.</h2>
-
-          <p class="section-final-cta__copy">Você não precisa passar horas todos os dias na cozinha.</p>
-          <p class="section-final-cta__copy">Também não precisa viver de comida sem graça só porque quer se alimentar melhor.</p>
-          <p class="section-final-cta__copy">Com planejamento, organização e as técnicas certas, é possível preparar comida gostosa para a semana, economizar no mercado e ganhar de volta algo que vale muito:</p>
-          <p class="section-final-cta__time">seu tempo.</p>
-          <p class="section-final-cta__copy">Eu quero te mostrar como fazer isso de uma maneira simples e possível para a vida real.</p>
-
-          <p class="section-final-cta__invite">Vem organizar sua cozinha comigo.</p>
-
-          <div class="section-final-cta__cta">
-            <a href="#oferta" class="sd-btn sd-btn--primary sd-btn--lg">
-              <i data-lucide="utensils-crossed" class="sd-icon"></i>
-              Quero entrar no Divina Marmita
-            </a>
-          </div>
-
-          <p class="section-final-cta__price">12 meses de acesso por apenas <strong>R$ 147</strong>.</p>
-        </div>
-      </div>
-    </section>
-
     <section class="section-close" aria-label="Divina Marmita">
       <div class="ds-container">
         <div class="section-close__inner">
           <p class="section-close__brand">Divina Marmita</p>
           <div class="section-close__list">
-            <p>Sua semana mais organizada.</p>
-            <p>Sua cozinha mais prática.</p>
-            <p>Sua alimentação muito mais fácil.</p>
+            <span class="section-close__chip">
+              <i data-lucide="calendar-check" aria-hidden="true"></i>
+              Sua semana mais organizada.
+            </span>
+            <span class="section-close__chip">
+              <i data-lucide="cooking-pot" aria-hidden="true"></i>
+              Sua cozinha mais prática.
+            </span>
+            <span class="section-close__chip">
+              <i data-lucide="salad" aria-hidden="true"></i>
+              Sua alimentação muito mais fácil.
+            </span>
           </div>
         </div>
       </div>
@@ -1649,8 +2913,128 @@
     <p>© 2026 · Divina Marmita · Todos os direitos reservados.</p>
   </footer>
 
-  <script src="assets/js/design-system.js"></script>
+  <script src="assets/js/design-system.js?v=pains-delay-8"></script>
   <script>
+    (function () {
+      var root = document.querySelector("[data-modules-carousel]");
+      if (root) {
+        var cards = Array.prototype.slice.call(root.querySelectorAll(".module-card"));
+        var prev = root.querySelector(".modules-carousel__nav--prev");
+        var next = root.querySelector(".modules-carousel__nav--next");
+        var dotsRoot = root.querySelector("[data-carousel-dots]");
+        var total = cards.length;
+        var active = 0;
+        var dots = [];
+
+        if (dotsRoot) {
+          cards.forEach(function (_card, index) {
+            var dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "modules-carousel__dot";
+            dot.setAttribute("role", "tab");
+            dot.setAttribute("aria-label", "Ir para o módulo " + (index + 1));
+            dot.addEventListener("click", function () {
+              active = index;
+              render();
+            });
+            dotsRoot.appendChild(dot);
+            dots.push(dot);
+          });
+        }
+
+        function wrappedOffset(index) {
+          var delta = index - active;
+          var half = Math.floor(total / 2);
+          if (delta > half) delta -= total;
+          if (delta < -half) delta += total;
+          return delta;
+        }
+
+        function render() {
+          var isMobile = window.matchMedia("(max-width: 700px)").matches;
+          cards.forEach(function (card, index) {
+            var offset = wrappedOffset(index);
+            var abs = Math.abs(offset);
+            var scaleX = 0.78;
+            var scaleY = 1;
+            var opacity = 0;
+            var z = 1;
+            var cardH = isMobile ? "240px" : "280px";
+
+            if (abs === 0) {
+              scaleX = 1.04;
+              scaleY = 1;
+              opacity = 1;
+              z = 30;
+              cardH = isMobile ? "380px" : "480px";
+            } else if (abs === 1) {
+              scaleX = 0.92;
+              scaleY = 1;
+              opacity = 0.95;
+              z = 20;
+              cardH = isMobile ? "300px" : "360px";
+            } else if (abs === 2) {
+              scaleX = 0.82;
+              scaleY = 1;
+              opacity = isMobile ? 0 : 0.4;
+              z = 10;
+              cardH = isMobile ? "260px" : "300px";
+            }
+
+            card.style.setProperty("--offset", offset);
+            card.style.setProperty("--scale-x", scaleX);
+            card.style.setProperty("--scale-y", scaleY);
+            card.style.setProperty("--opacity", opacity);
+            card.style.setProperty("--z", z);
+            card.style.setProperty("--card-h", cardH);
+            card.classList.toggle("is-active", abs === 0);
+            card.classList.toggle("is-side", abs === 1);
+            card.setAttribute("aria-hidden", abs === 0 ? "false" : "true");
+          });
+
+          dots.forEach(function (dot, index) {
+            var selected = index === active;
+            dot.setAttribute("aria-selected", selected ? "true" : "false");
+            dot.tabIndex = selected ? 0 : -1;
+          });
+        }
+
+        function go(step) {
+          active = (active + step + total) % total;
+          render();
+        }
+
+        prev.addEventListener("click", function () { go(-1); });
+        next.addEventListener("click", function () { go(1); });
+
+        cards.forEach(function (card, index) {
+          card.addEventListener("click", function () {
+            var offset = wrappedOffset(index);
+            if (offset === -1) go(-1);
+            else if (offset === 1) go(1);
+            else if (offset !== 0) {
+              active = index;
+              render();
+            }
+          });
+        });
+
+        root.addEventListener("keydown", function (event) {
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            go(-1);
+          } else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            go(1);
+          }
+        });
+
+        root.setAttribute("tabindex", "0");
+        render();
+        window.addEventListener("resize", render);
+      }
+    })();
+
     (function () {
       var oferta = document.getElementById("oferta");
       if (!oferta) return;

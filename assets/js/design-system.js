@@ -180,15 +180,182 @@
   /* ---------- REVEAL on scroll ---------- */
   function initReveal() {
     const els = document.querySelectorAll("[data-reveal]");
+    if (!els.length) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      els.forEach(function (el) { el.classList.add("is-revealed"); });
+      return;
+    }
+
     const obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) { entry.target.classList.add("is-revealed"); obs.unobserve(entry.target); }
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          obs.unobserve(entry.target);
+        }
       });
-    }, { threshold: 0.12 });
-    els.forEach(function (el) { obs.observe(el); });
+    }, { threshold: 0.18, rootMargin: "0px 0px -6% 0px" });
+
+    els.forEach(function (el) {
+      if (el.closest(".section-pains")) return;
+      obs.observe(el);
+    });
   }
 
-  /* ---------- COPY tokens ---------- */
+  /* ---------- PAINS: reveal acompanha o scroll ---------- */
+  function initPainsScrollReveal() {
+    const stage = document.querySelector(".section-pains__stage");
+    if (!stage) return;
+
+    const bounceItems = Array.from(stage.querySelectorAll('[data-reveal="down"], [data-reveal="up"]'));
+    const slideItems = Array.from(stage.querySelectorAll('[data-reveal="left"], [data-reveal="right"]'));
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      bounceItems.concat(slideItems).forEach(function (el) {
+        el.style.opacity = "1";
+        el.style.transform = "";
+        el.classList.add("is-revealed");
+      });
+      return;
+    }
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function easeOutBack(t) {
+      // passa da posição final e volta (overshoot)
+      var c1 = 3.4;
+      var c3 = c1 + 1;
+      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+    }
+
+    function clamp(n, min, max) {
+      return Math.min(max, Math.max(min, n));
+    }
+
+    function progressFor(el) {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      // Começa mais tarde: só quando o card já entrou bem na tela
+      const start = vh * 0.78;
+      const end = vh * 0.38;
+      return clamp((start - rect.top) / (start - end), 0, 1);
+    }
+
+    function resetBounce(el) {
+      el.classList.remove("is-revealed");
+      el.style.opacity = "0";
+      el.style.animation = "none";
+      if (el.getAttribute("data-reveal") === "down") {
+        el.style.transform = window.matchMedia("(max-width: 900px)").matches
+          ? "translate3d(0, -36px, 0)"
+          : "translate3d(-50%, -36px, 0)";
+      } else {
+        el.style.transform = window.matchMedia("(max-width: 900px)").matches
+          ? "translate3d(0, 40px, 0)"
+          : "translate3d(-50%, 40px, 0)";
+      }
+    }
+
+    function playBounce(el) {
+      el.style.opacity = "";
+      el.style.transform = "";
+      el.style.animation = "none";
+      void el.offsetWidth;
+      el.style.animation = "";
+      el.classList.remove("is-revealed");
+      void el.offsetWidth;
+      el.classList.add("is-revealed");
+    }
+
+    if (bounceItems.length) {
+      var bounceVisible = new WeakMap();
+
+      const bounceObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var el = entry.target;
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
+            if (!bounceVisible.get(el)) {
+              bounceVisible.set(el, true);
+              playBounce(el);
+            }
+          } else if (!entry.isIntersecting) {
+            bounceVisible.set(el, false);
+            resetBounce(el);
+          }
+        });
+      }, { threshold: [0, 0.45, 0.65], rootMargin: "0px 0px -18% 0px" });
+
+      bounceItems.forEach(function (el) {
+        resetBounce(el);
+        bounceObs.observe(el);
+      });
+    }
+
+    if (!slideItems.length) return;
+
+    function update() {
+      slideItems.forEach(function (el) {
+        const dir = el.getAttribute("data-reveal");
+        const delayMs = parseFloat(el.style.getPropertyValue("--reveal-delay")) || 0;
+        const offset = Math.min(0.22, (delayMs / 1000) * 0.35);
+        var raw = progressFor(el);
+        var t = clamp((raw - offset) / Math.max(0.001, 1 - offset), 0, 1);
+        var eased = easeOutBack(t);
+        var opacity = easeOutCubic(t);
+
+        el.style.opacity = String(opacity);
+        // eased pode passar de 1 → ultrapassa a posição final e volta
+        el.style.transform = dir === "left"
+          ? "translate3d(" + ((1 - eased) * -104) + "px, 0, 0)"
+          : "translate3d(" + ((1 - eased) * 104) + "px, 0, 0)";
+
+        el.classList.toggle("is-revealed", t > 0.98);
+      });
+    }
+
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        update();
+        ticking = false;
+      });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    window.addEventListener("resize", onScroll);
+    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    requestAnimationFrame(update);
+    setTimeout(update, 50);
+  }
+
+  /* ---------- IMAGINE: esquerda acompanha altura da direita ---------- */
+  function initImagineHeightMatch() {
+    var left = document.querySelector(".imagine-photos");
+    var right = document.querySelector(".imagine-card--story");
+    if (!left || !right) return;
+
+    function sync() {
+      left.style.height = "";
+      if (!window.matchMedia("(min-width: 900px)").matches) return;
+      var height = right.getBoundingClientRect().height;
+      if (height > 0) left.style.height = Math.round(height) + "px";
+    }
+
+    function bind(img) {
+      if (!img.complete) img.addEventListener("load", sync);
+    }
+
+    left.querySelectorAll("img").forEach(bind);
+    right.querySelectorAll("img").forEach(bind);
+    window.addEventListener("resize", sync);
+    requestAnimationFrame(sync);
+    setTimeout(sync, 80);
+    setTimeout(sync, 300);
+  }
   function initCopy() {
     document.querySelectorAll("[data-copy]").forEach(function (el) {
       el.addEventListener("click", function () {
@@ -219,6 +386,8 @@
     initToastDemos();
     initScrollSpy();
     initReveal();
+    initPainsScrollReveal();
+    initImagineHeightMatch();
     initCopy();
     initProgressDemo();
   });
